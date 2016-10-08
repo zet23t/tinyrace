@@ -1,4 +1,4 @@
-retromath/lib_*
+tinyrace/lib_*
 obj/*
 bin/*
 *.depend
