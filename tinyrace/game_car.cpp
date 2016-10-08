@@ -34,7 +34,10 @@ namespace Car {
                 stick = right;
             }
         }
-        FixedNumber16<4> len = stick.length() * FixedNumber16<4>(0,12);
+        FixedNumber16<4> len = stick.length();// * FixedNumber16<4>(0,12);
+        if (len.getFractionPart() > 5) len.setFractionPart(5);
+        stick.normalize().scale(len);
+        //printf("%d %d\n", len.getIntegerPart(),len.getFractionPart());
         //stick.normalize();
         car.dir += stick;
         car.dir.normalize();
