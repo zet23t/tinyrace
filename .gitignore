@@ -1,0 +1,4 @@
+retromath/lib_*
+obj/*
+bin/*
+*.depend
