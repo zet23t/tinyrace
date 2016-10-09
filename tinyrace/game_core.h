@@ -14,6 +14,7 @@ class NPCManager;
 // a bunch of global variables that shouldn't exist in this way (sorry)
 extern TinyScreen display;
 extern RenderBuffer<uint16_t,RENDER_COMMAND_COUNT> buffer;
+extern const Texture<uint16_t> textureAtlas;
 
 namespace Time {
     extern int millis;

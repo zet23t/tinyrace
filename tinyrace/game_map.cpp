@@ -17,4 +17,12 @@ namespace Map {
     void init() {
         tilemap = TilemapAsset::map_01();
     }
+
+    int getWidth() {
+        return tilemap.tilemaps[0].getWidth() * 16;
+    }
+
+    int getHeight() {
+        return tilemap.tilemaps[0].getHeight() * 16;
+    }
 }

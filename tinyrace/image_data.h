@@ -6,6 +6,11 @@
 namespace ImageAsset {
 extern const unsigned char font_data[8192] PROGMEM;
 extern const ImageData font;
+extern const unsigned char atlas_data[65536] PROGMEM;
+extern const ImageData atlas;
+namespace TextureAtlas_atlas {
+    extern const SpriteSheet racingcar;
+}
 extern const unsigned char tilemap_data[65536] PROGMEM;
 extern const ImageData tilemap;
 }
