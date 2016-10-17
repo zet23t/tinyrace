@@ -65,6 +65,8 @@
 		<Unit filename="td2play/srclib/lib_tilemap.h" />
 		<Unit filename="td2play/srclib/test_FixedMath.h" />
 		<Unit filename="td2play/srclib/test_math.h" />
+		<Unit filename="tinyrace/asset_tilemap.cpp" />
+		<Unit filename="tinyrace/asset_tilemap.h" />
 		<Unit filename="tinyrace/game_camera.cpp" />
 		<Unit filename="tinyrace/game_camera.h" />
 		<Unit filename="tinyrace/game_car.cpp" />
@@ -73,6 +75,10 @@
 		<Unit filename="tinyrace/game_core.h" />
 		<Unit filename="tinyrace/game_map.cpp" />
 		<Unit filename="tinyrace/game_map.h" />
+		<Unit filename="tinyrace/game_particle.cpp" />
+		<Unit filename="tinyrace/game_particle.h" />
+		<Unit filename="tinyrace/image_data.cpp" />
+		<Unit filename="tinyrace/image_data.h" />
 		<Unit filename="tinyrace/tinyrace.cpp" />
 		<Unit filename="tinyrace/tinyrace.ino" />
 		<Extensions>

@@ -7,6 +7,7 @@
 #include "game_camera.h"
 #include "game_car.h"
 #include "game_map.h"
+#include "game_particle.h"
 
 
 void setup() {
@@ -20,6 +21,7 @@ void setup() {
 
     Car::init();
     Map::init();
+    Particle::init();
 }
 
 
@@ -31,10 +33,12 @@ void loop() {
 
     Car::tick();
     Camera::tick();
+    Particle::tick();
     Map::tick();
 
     Camera::draw();
     Car::draw();
+    Particle::draw();
     Map::draw();
 
     //drawTextBubble("Here we are.\nQ: (3+2)*4=__",1,6,10,2, 5,0);
