@@ -9,6 +9,10 @@ extern const ImageData font;
 extern const unsigned char atlas_data[65536] PROGMEM;
 extern const ImageData atlas;
 namespace TextureAtlas_atlas {
+    extern const SpriteSheet grassparticles;
+    extern const SpriteSheet sandparticles;
+    extern const SpriteSheet arrow;
+    extern const SpriteSheet splash;
     extern const SpriteSheet particle;
     extern const SpriteSheet racingcar;
 }

@@ -10,11 +10,23 @@
 #include "game_particle.h"
 
 namespace Car {
+    struct GroundProperties {
+        FixedNumber16<4> friction;
+        uint8_t particleType;
+
+        void init(int frictionFrac, uint8_t particleType) {
+            friction.setFractionPart(frictionFrac);
+            this->particleType = particleType;
+        }
+    };
     struct Car {
         Fixed2D4 pos;
         Fixed2D4 vel;
         Fixed2D4 dir;
+        GroundProperties groundType;
     };
+
+    GroundProperties groundProperties[8];
 
     Car car;
     int tickCounter = 0;
@@ -69,20 +81,32 @@ namespace Car {
             car.dir += stick * FixedNumber16<4>(1,8);
             car.dir.normalize();
         }
+
+        int groundTypeFront = Map::getGroundType(car.pos.x.getIntegerPart() + (car.dir.x * 4).getIntegerPart(), car.pos.y.getIntegerPart() + (car.dir.y * 4).getIntegerPart());
+        int groundTypeBack = Map::getGroundType(car.pos.x.getIntegerPart() - (car.dir.x * 4).getIntegerPart(), car.pos.y.getIntegerPart() - (car.dir.y * 4).getIntegerPart());
+        GroundProperties propFront = groundProperties[groundTypeFront];
+        GroundProperties propBack = groundProperties[groundTypeBack];
+        car.groundType = propFront;
+
         //if (car.dir.x < 0) car.dir.x += FixedNumber16<4>(0,1);
         //if (car.dir.y < 0) car.dir.y += FixedNumber16<4>(0,1);
         //printf("v0: %f %f\n",car.vel.x.asFloat(), car.vel.y.asFloat());
         //printf("d0: %f %f\n",car.dir.x.asFloat(), car.dir.y.asFloat());
-        car.vel.scale(FixedNumber16<4>(0,15));
+        car.vel.scale((propFront.friction + propBack.friction) * FixedNumber16<4>(0,8));
         //printf("v1: %f %f\n",car.vel.x.asFloat(), car.vel.y.asFloat());
         //printf("d1: %f %f\n",car.dir.x.asFloat(), car.dir.y.asFloat());
-        car.vel+=car.dir * len;
+        car.vel+=car.dir * len * FixedNumber16<4>(2,0);
         if (car.vel.x < 0) car.vel.x+=FixedNumber16<4>(0,1);
         if (car.vel.y < 0) car.vel.y+=FixedNumber16<4>(0,1);
         if (car.vel.x > 0) car.vel.x-=FixedNumber16<4>(0,1);
         if (car.vel.y > 0) car.vel.y-=FixedNumber16<4>(0,1);
         //printf("%d %d\n",car.vel.x.getFractionPart(),car.vel.y.getFractionPart());
+
+
         car.pos += car.vel;
+
+        //printf("%d \n",groundType);
+
         if (car.pos.x < FixedNumber16<4>(96+32,0)) car.pos.x = FixedNumber16<4>(96+32,0);
         if (car.pos.y < FixedNumber16<4>(64+32,0)) car.pos.y = FixedNumber16<4>(64+32,0);
         if (car.pos.x > FixedNumber16<4>(Map::getWidth()-32,0)) car.pos.x = FixedNumber16<4>(Map::getWidth()-32,0);
@@ -92,14 +116,23 @@ namespace Car {
         if (tickCounter%2 == 0) {
             uint32_t rx = Math::randInt();
             uint32_t ry = Math::randInt();
-            Particle::spawn(car.pos - car.dir * FixedNumber16<4>(6,0),
-                            car.vel * FixedNumber16<4>(0,12) + Fixed2D4(FixedNumber16<4>(0,(rx%5)), FixedNumber16<4>(0,ry%5)).scale(FixedNumber16<4>(rx & 256 ? 1 : -1,0)),0,
+            Fixed2D4 moveDir = car.vel;
+            moveDir.normalize();
+            Particle::spawn(car.pos - moveDir * FixedNumber16<4>(6,0),
+                            car.vel * FixedNumber16<4>(0,12) + Fixed2D4(FixedNumber16<4>(0,(rx%5)), FixedNumber16<4>(0,ry%5)).scale(FixedNumber16<4>(rx & 256 ? 1 : -1,0)),
+                            car.groundType.particleType,
                             (car.vel.length() * FixedNumber16<4>(6,0)).getIntegerPart() + 1);
         }
     }
     void init() {
-        car.pos.x.setIntegerPart(30);
-        car.pos.y.setIntegerPart(30);
+        car.pos.x.setIntegerPart(400);
+        car.pos.y.setIntegerPart(400);
         car.dir.x.setIntegerPart(1);
+
+        groundProperties[Map::GroundType::forrest].init(2,0);
+        groundProperties[Map::GroundType::ground].init(9,3);
+        groundProperties[Map::GroundType::road].init(13,0);
+        groundProperties[Map::GroundType::sandpit].init(8,2);
+        groundProperties[Map::GroundType::water].init(3,1);
     }
 }

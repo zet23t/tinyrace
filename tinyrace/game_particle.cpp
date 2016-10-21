@@ -5,10 +5,12 @@
 namespace Particle {
 
     Texture<uint16_t> atlas;
+    const SpriteSheet *particleSheets[4];
 
     struct Particle {
         uint16_t age, maxAge;
         Fixed2D4 pos, vel;
+        uint8_t type;
 
         bool isActive() const {
             return age < maxAge;
@@ -16,6 +18,7 @@ namespace Particle {
         void initialize(Fixed2D4 pos, Fixed2D4 vel, uint8_t type, uint16_t maxAge) {
             this->pos = pos;
             this->vel = vel;
+            this->type = type;
             this->maxAge = maxAge;
             this->age = 0;
         }
@@ -24,7 +27,7 @@ namespace Particle {
             if (age < maxAge) {
                 int x = this->pos.x.getIntegerPart();
                 int y = this->pos.y.getIntegerPart();
-                const SpriteSheet *sheet = &ImageAsset::TextureAtlas_atlas::particle;
+                const SpriteSheet *sheet = particleSheets[type];
                 int spriteIndex = age * sheet->spriteCount / maxAge;
                 SpriteSheetRect rect = sheet->sprites[spriteIndex];
                 int w = rect.width, h = rect.height;
@@ -43,6 +46,10 @@ namespace Particle {
 
     void init() {
         atlas = Texture<uint16_t>(ImageAsset::atlas);
+        particleSheets[0]= &ImageAsset::TextureAtlas_atlas::particle;
+        particleSheets[1]= &ImageAsset::TextureAtlas_atlas::splash;
+        particleSheets[2]= &ImageAsset::TextureAtlas_atlas::sandparticles;
+        particleSheets[3]= &ImageAsset::TextureAtlas_atlas::grassparticles;
     }
 
     void spawn (Fixed2D4 pos, Fixed2D4 vel, uint8_t type, uint16_t maxAge) {
