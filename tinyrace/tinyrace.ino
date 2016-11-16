@@ -13,6 +13,7 @@
 void setup() {
     Wire.begin();
     display.begin();
+    analogWrite(A0, analogRead(A0));//Set audio output to avoid picking up noise, even though audio isn't used
 
     display.setFlip(0);
     display.setBrightness(8);

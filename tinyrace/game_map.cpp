@@ -38,11 +38,11 @@ namespace Map {
     int getGroundType(const int x, const int y) {
         uint8_t textureXOut, textureYOut, tilemapIndex;
         int tileIndex = tilemap.getTileIndex(x, y, textureXOut, textureYOut, tilemapIndex);
-        uint8_t tileSizeBits = tilemap.tileset.tileSizeBits;
+        /*uint8_t tileSizeBits = tilemap.tileset.tileSizeBits;
         uint16_t col = tilemap.tileset.tileSets[tilemapIndex].getColor(((tileIndex & 0xf) << tileSizeBits) + textureXOut,
                                                    ((tileIndex >> 4) << tileSizeBits) + textureYOut);
 
-        buffer.drawRect(x,y,1,1)->filledRect(col)->setDepth(160);
+        buffer.drawRect(x,y,1,1)->filledRect(col)->setDepth(160);*/
         return tileIndexGroundTypeMap[tileIndex];
     }
 

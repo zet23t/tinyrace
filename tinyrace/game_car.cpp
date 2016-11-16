@@ -13,10 +13,12 @@ namespace Car {
     struct GroundProperties {
         FixedNumber16<4> friction;
         uint8_t particleType;
+        bool solid;
 
-        void init(int frictionFrac, uint8_t particleType) {
+        void init(int frictionFrac, uint8_t particleType, bool s) {
             friction.setFractionPart(frictionFrac);
             this->particleType = particleType;
+            this->solid = s;
         }
     };
     struct Car {
@@ -104,6 +106,12 @@ namespace Car {
 
 
         car.pos += car.vel;
+        int groundTypeFrontFuture = Map::getGroundType(car.pos.x.getIntegerPart() + (car.dir.x * 4).getIntegerPart(), car.pos.y.getIntegerPart() + (car.dir.y * 4).getIntegerPart());
+        int groundTypeBackFuture = Map::getGroundType(car.pos.x.getIntegerPart() - (car.dir.x * 4).getIntegerPart(), car.pos.y.getIntegerPart() - (car.dir.y * 4).getIntegerPart());
+        if (groundProperties[groundTypeFrontFuture].solid || groundProperties[groundTypeFrontFuture].solid) {
+            car.pos -= car.vel;
+            car.vel.scale(FixedNumber16<4>(0,12));
+        }
 
         //printf("%d \n",groundType);
 
@@ -129,10 +137,10 @@ namespace Car {
         car.pos.y.setIntegerPart(400);
         car.dir.x.setIntegerPart(1);
 
-        groundProperties[Map::GroundType::forrest].init(2,0);
-        groundProperties[Map::GroundType::ground].init(9,3);
-        groundProperties[Map::GroundType::road].init(13,0);
-        groundProperties[Map::GroundType::sandpit].init(8,2);
-        groundProperties[Map::GroundType::water].init(3,1);
+        groundProperties[Map::GroundType::forrest].init(2,0, true);
+        groundProperties[Map::GroundType::ground].init(9,3, false);
+        groundProperties[Map::GroundType::road].init(13,0, false);
+        groundProperties[Map::GroundType::sandpit].init(8,2, false);
+        groundProperties[Map::GroundType::water].init(3,1,false);
     }
 }
