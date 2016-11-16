@@ -75,8 +75,12 @@
 		<Unit filename="tinyrace/game_core.h" />
 		<Unit filename="tinyrace/game_map.cpp" />
 		<Unit filename="tinyrace/game_map.h" />
+		<Unit filename="tinyrace/game_menu.cpp" />
+		<Unit filename="tinyrace/game_menu.h" />
 		<Unit filename="tinyrace/game_particle.cpp" />
 		<Unit filename="tinyrace/game_particle.h" />
+		<Unit filename="tinyrace/game_state.cpp" />
+		<Unit filename="tinyrace/game_state.h" />
 		<Unit filename="tinyrace/image_data.cpp" />
 		<Unit filename="tinyrace/image_data.h" />
 		<Unit filename="tinyrace/tinyrace.cpp" />

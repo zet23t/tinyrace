@@ -4,11 +4,7 @@
 
 #include <string.h>
 #include "game_core.h"
-#include "game_camera.h"
-#include "game_car.h"
-#include "game_map.h"
-#include "game_particle.h"
-
+#include "game_state.h"
 
 void setup() {
     Wire.begin();
@@ -19,29 +15,15 @@ void setup() {
     display.setBrightness(8);
     display.setBitDepth(buffer.is16bit());
     buffer.setClearBackground(true,RGB565(200,205,220));
-
-    Car::init();
-    Map::init();
-    Particle::init();
+    GameState::init();
 }
 
 
 void loop() {
     static uint32_t t = 0;
-    Joystick::updateJoystick();
     Time::millis = millis();
-    uint32_t dt = Time::millis - t;
 
-    Car::tick();
-    Camera::tick();
-    Particle::tick();
-    Map::tick();
-
-    Camera::draw();
-    Car::draw();
-    Particle::draw();
-    Map::draw();
-
+    GameState::tick();
     //drawTextBubble("Here we are.\nQ: (3+2)*4=__",1,6,10,2, 5,0);
     buffer.flush(display);
     stringBuffer.reset();
