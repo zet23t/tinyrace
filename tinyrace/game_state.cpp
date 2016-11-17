@@ -8,16 +8,29 @@
 #include "game_menu.h"
 
 namespace GameState {
+    namespace Mode {
+        const uint8_t MainMenu = 1;
+        const uint8_t Race = 2;
+    }
+
+    static uint8_t CurrentMode;
+
     void init() {
+        CurrentMode = Mode::MainMenu;
+
         Car::init();
         Map::init();
         Particle::init();
         GameMenu::init();
 
     }
-    void tick() {
-        Joystick::updateJoystick();
 
+    void tickMainMenu() {
+        GameMenu::tick();
+        GameMenu::draw();
+    }
+
+    void tickRace() {
         Car::tick();
         Camera::tick();
         Particle::tick();
@@ -27,5 +40,13 @@ namespace GameState {
         Car::draw();
         Particle::draw();
         Map::draw();
+    }
+    void tick() {
+        Joystick::updateJoystick();
+        switch (CurrentMode) {
+            default: tickMainMenu(); break;
+            case Mode::Race: tickRace(); break;
+        }
+
     }
 }

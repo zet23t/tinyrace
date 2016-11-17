@@ -11,10 +11,15 @@ extern const ImageData atlas;
 namespace TextureAtlas_atlas {
     extern const SpriteSheet grassparticles;
     extern const SpriteSheet sandparticles;
-    extern const SpriteSheet arrow;
-    extern const SpriteSheet splash;
+    extern const SpriteSheet menu_credits;
     extern const SpriteSheet particle;
+    extern const SpriteSheet menu_arrow_left;
+    extern const SpriteSheet splash;
+    extern const SpriteSheet logo;
     extern const SpriteSheet racingcar;
+    extern const SpriteSheet arrow;
+    extern const SpriteSheet menu_play;
+    extern const SpriteSheet menu_arrow_right;
 }
 extern const unsigned char tilemap_data[65536] PROGMEM;
 extern const ImageData tilemap;

@@ -14,7 +14,7 @@ void setup() {
     display.setFlip(0);
     display.setBrightness(8);
     display.setBitDepth(buffer.is16bit());
-    buffer.setClearBackground(true,RGB565(200,205,220));
+    buffer.setClearBackground(false,RGB565(200,205,220));
     GameState::init();
 }
 
