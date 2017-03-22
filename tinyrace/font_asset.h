@@ -5,6 +5,7 @@
 #include "lib_spritefont.h"
 namespace FontAsset {
 	extern const SpriteFont font;
+		extern const SpriteFont font2;
 	
 }
 #endif

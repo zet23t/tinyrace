@@ -49,4 +49,7 @@ namespace GameState {
         }
 
     }
+    void setMode(uint8_t mode) {
+        CurrentMode = mode;
+    }
 }
